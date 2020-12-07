@@ -1,5 +1,5 @@
 import unittest
-from TimestampsMiddleware import TimestampsMiddleware
+from timestamps_middleware import TimestampsMiddleware
 from tinydb import TinyDB
 from tinydb.storages import MemoryStorage
 from tinydb.operations import delete
