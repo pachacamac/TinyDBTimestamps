@@ -26,13 +26,11 @@ class TimestampsMiddleware(Middleware):
         doc = table[doc_id]
         pdoc = ptable.get(doc_id, {})
         self.previous_data[table_name] = self.previous_data.get(table_name, {})
-        # always write created_at either initially or from pdata so it can not be changed once set
-        if self.created_key:
+        if self.created_key is not None:
+          # always write created_at either initially or from pdata so it can not be changed once set
           doc[self.created_key] = pdoc.get(self.created_key, ts)
-          # TODO: is this enough of a copy for all cases?
           self.previous_data[table_name][doc_id] = dict(doc)
-        if self.updated_key and ((self.updated_key not in doc) or (doc != pdoc)): # updated entry
+        if self.updated_key is not None and ((self.updated_key not in doc) or (doc != pdoc)): # updated entry
           doc[self.updated_key] = ts
-          # TODO: is this enough of a copy for all cases?
           self.previous_data[table_name][doc_id] = dict(doc)
     self.storage.write(data)
